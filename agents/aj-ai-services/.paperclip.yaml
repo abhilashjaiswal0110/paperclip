@@ -1,0 +1,14 @@
+schema: paperclip/v1
+agents:
+  devops-engineer:
+    inputs:
+      env:
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+  publisher:
+    inputs:
+      env:
+        LINKEDIN_API_KEY:
+          kind: secret
+          requirement: optional
