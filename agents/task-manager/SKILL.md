@@ -47,7 +47,7 @@ curl -sS -X POST "$PAPERCLIP_API_URL/api/companies/$PAPERCLIP_COMPANY_ID/issues"
   -H "Content-Type: application/json" \
   -d '{
     "title": "<task-title>",
-    "body": "## Objective\n\n<what-needs-to-be-done>\n\n## Acceptance Criteria\n\n- [ ] <criterion-1>\n- [ ] <criterion-2>\n- [ ] <criterion-3>",
+    "description": "## Objective\n\n<what-needs-to-be-done>\n\n## Acceptance Criteria\n\n- [ ] <criterion-1>\n- [ ] <criterion-2>\n- [ ] <criterion-3>",
     "assigneeAgentId": "<agent-id>"
   }'
 ```
@@ -104,7 +104,7 @@ curl -sS -X PATCH "$PAPERCLIP_API_URL/api/issues/<issue-id>" \
   -H "Authorization: Bearer $PAPERCLIP_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "status": "<open | in_progress | done | cancelled>"
+    "status": "<backlog | todo | in_progress | in_review | blocked | done | cancelled>"
   }'
 ```
 
@@ -124,12 +124,16 @@ curl -sS -X PATCH "$PAPERCLIP_API_URL/api/issues/<issue-id>" \
 ## Task Lifecycle
 
 ```
-Created → Open → In Progress → Done
-                              → Cancelled
+Backlog → Todo → In Progress → In Review → Done
+                                          → Blocked
+                                          → Cancelled
 ```
 
-- **Created/Open**: Task is available for work
+- **Backlog**: Task is captured but not yet prioritized
+- **Todo**: Task is prioritized and ready for work
 - **In Progress**: Agent has checked out the task (atomic checkout)
+- **In Review**: Task is completed and awaiting review
+- **Blocked**: Task is blocked by a dependency or issue
 - **Done**: Task is completed and verified
 - **Cancelled**: Task was abandoned or no longer needed
 

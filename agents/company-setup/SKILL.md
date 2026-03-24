@@ -32,7 +32,7 @@ curl -sS -X POST "$PAPERCLIP_API_URL/api/companies" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "<company-name>",
-    "goal": "<company-mission-statement>"
+    "description": "<company-mission-statement>"
   }'
 ```
 
@@ -41,10 +41,10 @@ Save the returned `id` as `$COMPANY_ID`.
 ### 3. Set Monthly Budget
 
 ```bash
-curl -sS -X PATCH "$PAPERCLIP_API_URL/api/companies/$COMPANY_ID" \
+curl -sS -X PATCH "$PAPERCLIP_API_URL/api/companies/$COMPANY_ID/budgets" \
   -H "Content-Type: application/json" \
   -d '{
-    "monthlyBudgetUsd": <budget-amount>
+    "budgetMonthlyCents": <budget-amount-in-cents>
   }'
 ```
 

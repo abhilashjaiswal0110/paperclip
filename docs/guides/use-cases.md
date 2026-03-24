@@ -44,7 +44,7 @@ curl -X POST http://localhost:3100/api/companies \
   -H "Content-Type: application/json" \
   -d '{
     "name": "DevCorp AI",
-    "goal": "Build and maintain a modern SaaS product with AI agents"
+    "description": "Build and maintain a modern SaaS product with AI agents"
   }'
 
 # Create a CEO agent
@@ -163,12 +163,12 @@ You operate several AI companies, each with its own goal, agents, budget, and or
 # Create Company A
 curl -X POST http://localhost:3100/api/companies \
   -H "Content-Type: application/json" \
-  -d '{"name": "DevCorp AI", "goal": "Software development"}'
+  -d '{"name": "DevCorp AI", "description": "Software development"}'
 
 # Create Company B
 curl -X POST http://localhost:3100/api/companies \
   -H "Content-Type: application/json" \
-  -d '{"name": "ContentCo AI", "goal": "Content production"}'
+  -d '{"name": "ContentCo AI", "description": "Content production"}'
 ```
 
 ---
@@ -232,9 +232,9 @@ Require board approval for sensitive operations:
 Set monthly budgets to control costs:
 
 ```bash
-curl -X PATCH http://localhost:3100/api/companies/<company-id> \
+curl -X PATCH http://localhost:3100/api/companies/<company-id>/budgets \
   -H "Content-Type: application/json" \
-  -d '{"monthlyBudgetUsd": 500}'
+  -d '{"budgetMonthlyCents": 50000}'
 ```
 
 When the budget limit is reached, agents are automatically paused.

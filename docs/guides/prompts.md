@@ -188,7 +188,7 @@ curl http://localhost:3100/api/companies/<company-id>/agents
 curl http://localhost:3100/api/agents/<agent-id>
 
 # Check agent status
-curl http://localhost:3100/api/agents/<agent-id>/me \
+curl http://localhost:3100/api/agents/me \
   -H "Authorization: Bearer <agent-api-key>"
 ```
 
@@ -200,7 +200,7 @@ curl -X POST http://localhost:3100/api/companies/<company-id>/issues \
   -H "Content-Type: application/json" \
   -d '{
     "title": "Implement feature X",
-    "body": "Detailed description of the feature",
+    "description": "Detailed description of the feature",
     "assigneeAgentId": "<agent-id>"
   }'
 

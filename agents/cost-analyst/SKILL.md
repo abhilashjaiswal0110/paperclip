@@ -28,12 +28,12 @@ curl -sS "$PAPERCLIP_API_URL/api/companies/$PAPERCLIP_COMPANY_ID" \
   -H "Authorization: Bearer $PAPERCLIP_API_KEY"
 ```
 
-Review the `monthlyBudgetUsd` and current spend fields.
+Review the `budgetMonthlyCents` and `spentMonthlyCents` fields.
 
 ### 2. Get Cost Breakdown
 
 ```bash
-curl -sS "$PAPERCLIP_API_URL/api/companies/$PAPERCLIP_COMPANY_ID/costs" \
+curl -sS "$PAPERCLIP_API_URL/api/companies/$PAPERCLIP_COMPANY_ID/costs/summary" \
   -H "Authorization: Bearer $PAPERCLIP_API_KEY"
 ```
 
@@ -70,11 +70,11 @@ curl -sS "$PAPERCLIP_API_URL/api/companies/$PAPERCLIP_COMPANY_ID/activity" \
 If budget changes are needed:
 
 ```bash
-curl -sS -X PATCH "$PAPERCLIP_API_URL/api/companies/$PAPERCLIP_COMPANY_ID" \
+curl -sS -X PATCH "$PAPERCLIP_API_URL/api/companies/$PAPERCLIP_COMPANY_ID/budgets" \
   -H "Authorization: Bearer $PAPERCLIP_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "monthlyBudgetUsd": <new-amount>
+    "budgetMonthlyCents": <new-amount>
   }'
 ```
 

@@ -75,7 +75,7 @@ pnpm install
 
 ### 3. Configure Environment (Optional)
 
-Paperclip works out of the box with embedded PGlite (no external database needed). If you want to use an external PostgreSQL instance:
+Paperclip works out of the box with embedded PostgreSQL (no external database installation needed). If you want to use an external PostgreSQL instance:
 
 ```bash
 cp .env.example .env
@@ -89,7 +89,7 @@ PORT=3100
 ```
 
 <Note>
-Leave `DATABASE_URL` unset to use the embedded PGlite database — no PostgreSQL installation required.
+Leave `DATABASE_URL` unset to use the embedded PostgreSQL database. Data is stored under `~/.paperclip/instances/<instance>/db`.
 </Note>
 
 ### 4. Start Development Server
@@ -155,7 +155,7 @@ Starts only the Vite dev server for the UI.
 To start fresh with a clean database:
 
 ```bash
-rm -rf data/pglite
+rm -rf ~/.paperclip/instances/*/db
 pnpm dev
 ```
 
@@ -244,12 +244,13 @@ lsof -i :3100
 PORT=3200 pnpm dev
 ```
 
-### PGlite Issues
+### Embedded PostgreSQL Issues
 
-If you encounter database errors with PGlite:
+If you encounter database errors with embedded PostgreSQL:
 
 ```bash
-rm -rf data/pglite
+# Remove the default embedded Postgres data directory
+rm -rf ~/.paperclip/instances/*/db
 pnpm dev
 ```
 
