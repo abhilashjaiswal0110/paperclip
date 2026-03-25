@@ -144,7 +144,7 @@ Configure secrets after import:
 | `EMAIL_SERVICE_KEY` | TriageBot, CSATInsight | Required — ticket acknowledgement and CSAT survey email delivery |
 | `SLACK_WEBHOOK_URL` | SupportDirector, SLAGuard, CSATInsight | Optional — Slack breach alerts and escalation notifications |
 | `TEAMS_WEBHOOK_URL` | SupportDirector, SLAGuard | Optional — Microsoft Teams notifications |
-| `JIRA_API_TOKEN` | TriageBot, DiagnosBot, L2 | Optional — Jira ticket sync and engineering escalation tracking |
+| `JIRA_API_TOKEN` | TriageBot, DiagnosBot (L2 Support) | Optional — Jira ticket sync and engineering escalation tracking |
 | `ZENDESK_API_TOKEN` | TriageBot, DiagnosBot | Optional — Zendesk-specific API access |
 | `PAGERDUTY_API_KEY` | RootCauseBot, SLAGuard | Optional — P1 incident paging and on-call escalation |
 
