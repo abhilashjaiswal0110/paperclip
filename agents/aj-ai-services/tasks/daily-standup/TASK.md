@@ -1,15 +1,7 @@
 ---
 name: Daily Standup
 assignee: program-manager
-schedule:
-  timezone: Asia/Kolkata
-  startsAt: 2026-03-25T09:00:00+05:30
-  recurrence:
-    frequency: daily
-    interval: 1
-    time:
-      hour: 9
-      minute: 0
+recurring: true
 ---
 
 Run the daily standup for AJ AI Services Pvt Ltd.

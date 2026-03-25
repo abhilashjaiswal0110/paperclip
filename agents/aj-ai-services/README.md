@@ -89,7 +89,7 @@ paperclipai company import --from agents/aj-ai-services
 Or from GitHub:
 
 ```bash
-paperclipai company import --from https://github.com/abhilashjaiswal0110/paperclip/tree/main/agents/aj-ai-services
+paperclipai company import --from https://github.com/paperclipai/paperclip/tree/main/agents/aj-ai-services
 ```
 
 ### Environment Secrets

@@ -23,8 +23,10 @@ tags:
   - ai-company
 requirements:
   secrets:
-    - LINKEDIN_API_KEY
-    - GH_TOKEN
+    required:
+      - GH_TOKEN
+    optional:
+      - LINKEDIN_API_KEY
 ---
 
 AJ AI Services Pvt Ltd is an AI-powered company on a mission to build the #1 social media handling app targeting $1M MRR. The company uses a hub-and-spoke org model where the CEO (AJ) delegates to department leads who each manage their own specialist sub-teams.
