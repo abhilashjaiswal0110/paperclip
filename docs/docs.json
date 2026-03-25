@@ -131,6 +131,27 @@
         ]
       },
       {
+        "tab": "Architecture",
+        "groups": [
+          {
+            "group": "Architecture Specs",
+            "pages": [
+              "specs/software-architecture",
+              "specs/security-architecture",
+              "specs/data-architecture"
+            ]
+          },
+          {
+            "group": "Company References",
+            "pages": [
+              "companies/companies-spec",
+              "companies/cloudops-pro",
+              "companies/support-genius"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "CLI",
         "groups": [
           {

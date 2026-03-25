@@ -96,3 +96,11 @@ Built-in adapters: `claude_local`, `codex_local`, `process`, `http`. You can cre
 - **Single-assignee tasks** — atomic checkout prevents concurrent work on the same task
 - **Adapter-agnostic** — any runtime that can call an HTTP API works as an agent
 - **Embedded by default** — zero-config local mode with embedded PostgreSQL
+
+## Deep-Dive Architecture Specs
+
+For detailed architecture documentation covering all agent companies, deployment topology, and data flows:
+
+- [Software Architecture](/specs/software-architecture) — system layers, adapter model, agent execution flows, deployment topology
+- [Security Architecture](/specs/security-architecture) — authentication, authorization, secrets management, per-company security controls
+- [Data Architecture](/specs/data-architecture) — entity model, data flow patterns, persistence strategy, company data isolation
