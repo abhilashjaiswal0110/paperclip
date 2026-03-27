@@ -16,6 +16,8 @@ goals:
   - Implement content safety and Responsible AI guardrails
   - Create event-driven social media campaigns
   - Establish project tracking and delivery cadence
+  - Track post performance analytics and engagement trends
+  - Run A/B tests to continuously optimise content strategy
 tags:
   - social-media
   - linkedin

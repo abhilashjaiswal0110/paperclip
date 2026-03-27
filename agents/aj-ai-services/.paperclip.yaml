@@ -77,6 +77,23 @@ agents:
         enabled: true
         intervalSec: 300
         wakeOnDemand: true
+  analytics-engine:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 300
+        wakeOnDemand: true
+    inputs:
+      env:
+        LINKEDIN_API_KEY:
+          kind: secret
+          requirement: optional
+  ab-tester:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 300
+        wakeOnDemand: true
 
 routines:
   daily-standup:
@@ -84,3 +101,8 @@ routines:
     schedule:
       timezone: Asia/Kolkata
       cron: "0 9 * * *"
+  weekly-performance-review:
+    task: tasks/weekly-performance-review/TASK.md
+    schedule:
+      timezone: Asia/Kolkata
+      cron: "0 10 * * 1"
