@@ -1,0 +1,126 @@
+schema: paperclip/v1
+
+agents:
+  ceo:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 300
+        wakeOnDemand: true
+  cto:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 300
+        wakeOnDemand: true
+    inputs:
+      env:
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+  backend-engineer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 300
+        wakeOnDemand: true
+    inputs:
+      env:
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+  frontend-engineer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 300
+        wakeOnDemand: true
+    inputs:
+      env:
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+        FIGMA_API_KEY:
+          kind: secret
+          requirement: optional
+  qa-engineer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 300
+        wakeOnDemand: true
+    inputs:
+      env:
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+  devops-engineer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 300
+        wakeOnDemand: true
+    inputs:
+      env:
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+        VERCEL_TOKEN:
+          kind: secret
+          requirement: optional
+        AWS_ACCESS_KEY_ID:
+          kind: secret
+          requirement: optional
+        AWS_SECRET_ACCESS_KEY:
+          kind: secret
+          requirement: optional
+  product-manager:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 300
+        wakeOnDemand: true
+    inputs:
+      env:
+        LINEAR_API_KEY:
+          kind: secret
+          requirement: optional
+  ux-designer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 300
+        wakeOnDemand: true
+    inputs:
+      env:
+        FIGMA_API_KEY:
+          kind: secret
+          requirement: optional
+  technical-writer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 300
+        wakeOnDemand: true
+    inputs:
+      env:
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+
+routines:
+  daily-standup:
+    task: tasks/daily-standup/TASK.md
+    schedule:
+      timezone: UTC
+      cron: "0 9 * * 1-5"
+  weekly-sprint-review:
+    task: tasks/weekly-sprint-review/TASK.md
+    schedule:
+      timezone: UTC
+      cron: "0 14 * * 5"
+  sprint-retrospective:
+    task: tasks/sprint-retrospective/TASK.md
+    schedule:
+      timezone: UTC
+      cron: "0 15 * * 5"

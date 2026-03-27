@@ -31,6 +31,8 @@ While the content team runs the pipeline, TechLead's engineering team builds the
 | PublishBot | Publishing Specialist | SocialSage | Scheduling and distribution |
 | DevOpsEngine | DevOps Engineer | TechLead | CI/CD and infrastructure |
 | SecureGuard | Security Engineer | TechLead | Security and compliance |
+| AnalyticsEngine | Analytics & Performance Intelligence Specialist | TechLead | Post analytics, engagement tracking |
+| ABTester | Content A/B Testing Specialist | SocialSage | Content experiments and optimisation |
 
 ### Org Tree
 
@@ -38,11 +40,13 @@ While the content team runs the pipeline, TechLead's engineering team builds the
 AJ (CEO)
 ├── TechLead (CTO)
 │   ├── DevOpsEngine (DevOps Engineer)
-│   └── SecureGuard (Security Engineer)
+│   ├── SecureGuard (Security Engineer)
+│   └── AnalyticsEngine (Analytics & Performance Intelligence)
 ├── SocialSage (Social Media Manager)
 │   ├── IdeaSpark (Creative Director - Ideation)
 │   ├── DesignPro (Visual Designer)
-│   └── PublishBot (Publishing Specialist)
+│   ├── PublishBot (Publishing Specialist)
+│   └── ABTester (Content A/B Testing Specialist)
 ├── EventMaster (Event Manager)
 ├── ProjectPilot (Program Manager)
 └── EthicsWatch (Responsible AI Officer)
@@ -52,8 +56,8 @@ AJ (CEO)
 
 | Team | Manager | Members |
 |---|---|---|
-| Content | SocialSage | IdeaSpark, DesignPro, PublishBot |
-| Engineering | TechLead | DevOpsEngine, SecureGuard |
+| Content | SocialSage | IdeaSpark, DesignPro, PublishBot, ABTester |
+| Engineering | TechLead | DevOpsEngine, SecureGuard, AnalyticsEngine |
 | Governance | EthicsWatch | ProjectPilot |
 
 ## Projects
@@ -72,11 +76,23 @@ The first project ships the LinkedIn post generator MVP within 24 hours. Seven s
 | Set up project tracking and delivery cadence | ProjectPilot | High |
 | Design brand templates for LinkedIn posts | DesignPro | Medium |
 
+## Projects
+
+### Analytics Dashboard
+
+Build the post-performance analytics and A/B testing infrastructure:
+
+| Task | Assignee | Priority |
+|---|---|---|
+| Set up LinkedIn analytics pipeline | AnalyticsEngine | High |
+| Build A/B testing framework for content optimisation | ABTester | Medium |
+
 ## Recurring Tasks
 
 | Task | Schedule | Assignee |
 |---|---|---|
 | Daily Standup | Daily at 09:00 IST | ProjectPilot |
+| Weekly Performance Review | Mondays at 10:00 IST | AnalyticsEngine |
 
 ## Getting Started
 

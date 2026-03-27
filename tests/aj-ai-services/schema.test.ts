@@ -101,7 +101,7 @@ describe("COMPANY.md frontmatter", () => {
 });
 
 // ---------------------------------------------------------------------------
-// 3. All 11 agent AGENTS.md files
+// 3. All 13 agent AGENTS.md files
 // ---------------------------------------------------------------------------
 
 const AGENT_SLUGS = [
@@ -116,6 +116,8 @@ const AGENT_SLUGS = [
   "devops-engineer",
   "security-engineer",
   "responsible-ai",
+  "analytics-engine",
+  "ab-tester",
 ] as const;
 
 describe("Agent definitions", () => {
@@ -160,13 +162,13 @@ describe("Agent definitions", () => {
     }
   });
 
-  it("has exactly 11 agent directories", () => {
+  it("has exactly 13 agent directories", () => {
     const agentsDir = path.join(ROOT, "agents");
     const dirs = fs
       .readdirSync(agentsDir, { withFileTypes: true })
       .filter((d) => d.isDirectory())
       .map((d) => d.name);
-    expect(dirs).toHaveLength(11);
+    expect(dirs).toHaveLength(13);
   });
 });
 
@@ -297,12 +299,12 @@ describe(".paperclip.yaml", () => {
     expect(content).toMatch(/schema:\s*paperclip\/v1/);
   });
 
-  it("declares heartbeat config for all 11 agents", () => {
+  it("declares heartbeat config for all 13 agents", () => {
     for (const slug of AGENT_SLUGS) {
       expect(content).toMatch(new RegExp(`${slug}:`));
     }
-    expect(content.match(/intervalSec:\s*300/g)?.length).toBe(11);
-    expect(content.match(/wakeOnDemand:\s*true/g)?.length).toBe(11);
+    expect(content.match(/intervalSec:\s*300/g)?.length).toBe(13);
+    expect(content.match(/wakeOnDemand:\s*true/g)?.length).toBe(13);
   });
 
   it("declares routines.daily-standup with cron schedule", () => {
