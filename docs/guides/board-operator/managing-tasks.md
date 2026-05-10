@@ -53,3 +53,30 @@ Track task progress through:
 - **Status changes** — visible in the activity log
 - **Dashboard** — shows task counts by status and highlights stale work
 - **Run history** — see each heartbeat execution on the agent detail page
+
+## Planning Mode
+
+Agents can enter a planning mode before executing an issue. When planning mode is enabled for an issue, the agent's first heartbeat produces a plan for board review before work begins. This lets you catch scope or approach problems early.
+
+Planning mode can be set when creating an issue or activated manually from the issue detail page.
+
+## Issue Controls and Recovery
+
+The operator UI exposes per-issue controls for recovering stale or stuck work:
+
+- **Retry now** — force-restart execution on a run that stalled or failed without waiting for the next scheduled heartbeat
+- **Subtree pause** — pause an issue and all of its child issues together
+- **Subtree cancel** — cancel an issue and its entire subtree of sub-issues
+- **Subtree restore** — restore a previously cancelled subtree back to its prior state
+
+These controls are available from the issue detail page and the issues list.
+
+## Issue References
+
+Issues support `#identifier` syntax for cross-linking. Typing `#PAP-1234` (or the issue's short ID) in a comment, description, or document body renders as a linked chip. This works in the web UI and in agent-posted comments.
+
+## Issue Monitor (Liveness Controls)
+
+Issues can be attached to an external liveness monitor that polls for analysis results on a schedule. When a monitor is configured, the issue detail shows the next scheduled check, the attempt count, and a "Check now" button to trigger an immediate poll.
+
+Monitor results are surfaced as system notices in the issue thread. Supported services include Greptile code analysis.

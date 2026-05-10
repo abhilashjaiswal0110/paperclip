@@ -142,6 +142,24 @@ agents:
         SLACK_WEBHOOK_URL:
           kind: secret
           requirement: optional
+  platform-engineer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: true
+    inputs:
+      env:
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+        AWS_ACCESS_KEY_ID:
+          kind: secret
+          requirement: optional
+        AWS_SECRET_ACCESS_KEY:
+          kind: secret
+          requirement: optional
 
 routines:
   daily-ops-standup:

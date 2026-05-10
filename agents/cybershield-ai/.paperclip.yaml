@@ -103,6 +103,13 @@ agents:
         SLACK_WEBHOOK_URL:
           kind: secret
           requirement: optional
+  digital-forensics:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: false
 
 routines:
   daily-threat-brief:
