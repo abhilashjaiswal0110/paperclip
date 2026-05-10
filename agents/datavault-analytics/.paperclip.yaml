@@ -1,0 +1,95 @@
+schema: paperclip/v1
+
+agents:
+  cdo:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 300
+        wakeOnDemand: true
+  data-steward:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 300
+        wakeOnAssignment: true
+        wakeOnDemand: true
+  data-engineer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: true
+    inputs:
+      env:
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+        SNOWFLAKE_ACCOUNT:
+          kind: secret
+          requirement: optional
+        SNOWFLAKE_USER:
+          kind: secret
+          requirement: optional
+        SNOWFLAKE_PASSWORD:
+          kind: secret
+          requirement: optional
+        DBT_PROFILES_DIR:
+          kind: secret
+          requirement: optional
+  dataops-engineer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 300
+        wakeOnAssignment: true
+        wakeOnDemand: true
+    inputs:
+      env:
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+        AIRFLOW_API_KEY:
+          kind: secret
+          requirement: optional
+        DATADOG_API_KEY:
+          kind: secret
+          requirement: optional
+        SLACK_WEBHOOK_URL:
+          kind: secret
+          requirement: optional
+  ml-engineer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: true
+    inputs:
+      env:
+        MLFLOW_TRACKING_URI:
+          kind: secret
+          requirement: optional
+        OPENAI_API_KEY:
+          kind: secret
+          requirement: optional
+  bi-developer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: true
+
+routines:
+  daily-pipeline-health:
+    task: tasks/daily-pipeline-health/TASK.md
+    schedule:
+      timezone: UTC
+      cron: "0 6 * * *"
+  weekly-data-quality-report:
+    task: tasks/weekly-data-quality-report/TASK.md
+    schedule:
+      timezone: UTC
+      cron: "0 8 * * 1"
