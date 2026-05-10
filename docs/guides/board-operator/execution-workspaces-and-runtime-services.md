@@ -72,3 +72,15 @@ With the current implementation:
 - Execution workspace runtime overrides are stored on the execution workspace.
 - Heartbeat runs do not auto-start workspace services.
 - Server startup does not auto-restart workspace services.
+
+## Sandbox Execution Targets
+
+In addition to local execution workspaces, adapters that support sandbox targets can route agent execution to a remote environment:
+
+| Target | Description |
+|--------|-------------|
+| **Local** | Agent runs on the same machine as the Paperclip server (default) |
+| **SSH Remote** | Agent runs on a remote machine via SSH. Paperclip provisions the workspace, injects credentials, and bridges API callbacks over the connection |
+| **E2B Sandbox** | Agent runs in a cloud-isolated E2B sandbox container. The E2B plugin must be installed and configured |
+
+The execution target is configured per-agent from the **Environment Settings** page. The sandbox callback bridge (`PAPERCLIP_BRIDGE_DEBUG=1` to enable debug logging) provides the agent in the remote environment with access to the Paperclip API without direct network reachability to the server.
