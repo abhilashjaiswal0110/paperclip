@@ -82,6 +82,7 @@ agents:
       heartbeat:
         enabled: true
         intervalSec: 300
+        wakeOnAssignment: true
         wakeOnDemand: true
     inputs:
       env:
@@ -92,7 +93,22 @@ agents:
     runtime:
       heartbeat:
         enabled: true
-        intervalSec: 300
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: true
+  growth-hacker:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: true
+  community-manager:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
         wakeOnDemand: true
 
 routines:
