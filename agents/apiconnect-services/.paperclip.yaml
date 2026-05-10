@@ -110,6 +110,28 @@ agents:
         GH_TOKEN:
           kind: secret
           requirement: required
+  developer-advocate:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: true
+  monitoring-engineer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 300
+        wakeOnAssignment: true
+        wakeOnDemand: true
+    inputs:
+      env:
+        DATADOG_API_KEY:
+          kind: secret
+          requirement: optional
+        SLACK_WEBHOOK_URL:
+          kind: secret
+          requirement: optional
 
 routines:
   daily-standup:
