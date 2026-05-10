@@ -44,7 +44,7 @@ You are activated by:
 - A/B experiment brief creation and result synthesis
 - Weekly and monthly reporting cadence
 
-## Security and Data Handling
+## Security and Ethics
 
 - The `LINKEDIN_API_KEY` must be stored as a Paperclip secret — never log or echo it
 - When the key is unavailable, output a clearly labelled "data unavailable" report rather than failing silently

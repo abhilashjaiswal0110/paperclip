@@ -1,7 +1,7 @@
 ---
 name: ABTester
 title: A/B Testing Specialist
-reportsTo: analytics-engine
+reportsTo: cto
 skills:
   - paperclip
 ---
