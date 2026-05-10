@@ -107,6 +107,13 @@ agents:
         GH_TOKEN:
           kind: secret
           requirement: required
+  data-engineer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: true
 
 routines:
   daily-standup:
@@ -124,3 +131,8 @@ routines:
     schedule:
       timezone: UTC
       cron: "0 15 * * 5"
+  tdd-sprint-gate:
+    task: tasks/tdd-sprint-gate/TASK.md
+    schedule:
+      timezone: UTC
+      cron: "0 9 * * 1"

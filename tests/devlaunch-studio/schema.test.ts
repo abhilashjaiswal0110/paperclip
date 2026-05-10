@@ -94,7 +94,7 @@ describe("COMPANY.md frontmatter", () => {
 });
 
 // ---------------------------------------------------------------------------
-// 3. All 9 agent AGENTS.md files
+// 3. All 10 agent AGENTS.md files
 // ---------------------------------------------------------------------------
 
 const AGENT_SLUGS = [
@@ -107,6 +107,7 @@ const AGENT_SLUGS = [
   "product-manager",
   "ux-designer",
   "technical-writer",
+  "data-engineer",
 ] as const;
 
 describe("Agent definitions", () => {
@@ -151,13 +152,13 @@ describe("Agent definitions", () => {
     }
   });
 
-  it("has exactly 9 agent directories", () => {
+  it("has exactly 10 agent directories", () => {
     const agentsDir = path.join(ROOT, "agents");
     const dirs = fs
       .readdirSync(agentsDir, { withFileTypes: true })
       .filter((d) => d.isDirectory())
       .map((d) => d.name);
-    expect(dirs).toHaveLength(9);
+    expect(dirs).toHaveLength(10);
   });
 });
 
@@ -354,12 +355,14 @@ describe(".paperclip.yaml", () => {
     expect(content).toMatch(/schema:\s*paperclip\/v1/);
   });
 
-  it("declares heartbeat config for all 9 agents", () => {
+  it("declares heartbeat config for all 10 agents", () => {
     for (const slug of AGENT_SLUGS) {
       expect(content).toMatch(new RegExp(`${slug}:`));
     }
+    // 9 standard agents use intervalSec: 300; data-engineer uses intervalSec: 0
     expect(content.match(/intervalSec:\s*300/g)?.length).toBe(9);
-    expect(content.match(/wakeOnDemand:\s*true/g)?.length).toBe(9);
+    // 9 standard agents plus data-engineer all declare wakeOnDemand: true
+    expect(content.match(/wakeOnDemand:\s*true/g)?.length).toBe(10);
   });
 
   it("declares GH_TOKEN as required for multiple engineering agents", () => {
@@ -373,16 +376,17 @@ describe(".paperclip.yaml", () => {
     expect(content).toMatch(/requirement:\s*optional/);
   });
 
-  it("declares all 3 routines", () => {
+  it("declares all 4 routines", () => {
     expect(content).toMatch(/routines:/);
     expect(content).toMatch(/daily-standup:/);
     expect(content).toMatch(/weekly-sprint-review:/);
     expect(content).toMatch(/sprint-retrospective:/);
+    expect(content).toMatch(/tdd-sprint-gate:/);
   });
 
   it("routines have cron schedules", () => {
     const cronMatches = content.match(/cron:/g);
-    expect(cronMatches?.length).toBe(3);
+    expect(cronMatches?.length).toBe(4);
   });
 });
 
