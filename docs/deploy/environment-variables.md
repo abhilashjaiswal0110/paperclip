@@ -46,9 +46,17 @@ These are set automatically by the server when invoking agents:
 | `PAPERCLIP_APPROVAL_STATUS` | Approval decision |
 | `PAPERCLIP_LINKED_ISSUE_IDS` | Comma-separated linked issue IDs |
 
+## Sandbox & Remote Execution
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PAPERCLIP_BRIDGE_DEBUG` | (unset) | Set to `1` to enable verbose request logging on the sandbox callback bridge. Useful when debugging remote environment API access from E2B or SSH sandbox sessions. |
+
 ## LLM Provider Keys (for adapters)
 
 | Variable | Description |
 |----------|-------------|
 | `ANTHROPIC_API_KEY` | Anthropic API key (for Claude Local adapter) |
 | `OPENAI_API_KEY` | OpenAI API key (for Codex Local adapter) |
+| `GEMINI_API_KEY` | Google Gemini API key (for Gemini Local adapter) |
+| `GOOGLE_API_KEY` | Alternative Google API key (also accepted by Gemini Local adapter) |

@@ -20,9 +20,10 @@ When a heartbeat fires, Paperclip:
 |---------|----------|-------------|
 | [Claude Local](/adapters/claude-local) | `claude_local` | Runs Claude Code CLI locally |
 | [Codex Local](/adapters/codex-local) | `codex_local` | Runs OpenAI Codex CLI locally |
-| [Gemini Local](/adapters/gemini-local) | `gemini_local` | Runs Gemini CLI locally (experimental — adapter package exists, not yet in stable type enum) |
+| [Gemini Local](/adapters/gemini-local) | `gemini_local` | Runs Gemini CLI locally (supports stream-json wire format, session persistence, skills injection) |
+| ACPX Local | `acpx_local` | Runs an ACPX local agent; supports E2B, SSH, and custom sandbox runtime targets |
 | OpenCode Local | `opencode_local` | Runs OpenCode CLI locally (multi-provider `provider/model`) |
-| Cursor | `cursor` | Runs Cursor in background mode |
+| Cursor | `cursor` | Runs Cursor in background/sandbox mode |
 | Pi Local | `pi_local` | Runs an embedded Pi agent locally |
 | Hermes Local | `hermes_local` | Runs Hermes CLI locally (`hermes-paperclip-adapter`) |
 | OpenClaw Gateway | `openclaw_gateway` | Connects to an OpenClaw gateway endpoint |
