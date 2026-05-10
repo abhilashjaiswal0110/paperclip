@@ -125,6 +125,7 @@ const AGENT_SLUGS = [
   "finops-analyst",
   "security-ops",
   "program-manager",
+  "platform-engineer",
 ] as const;
 
 describe("Agent definitions", () => {
@@ -169,13 +170,13 @@ describe("Agent definitions", () => {
     }
   });
 
-  it("has exactly 8 agent directories", () => {
+  it("has exactly 9 agent directories", () => {
     const agentsDir = path.join(ROOT, "agents");
     const dirs = fs
       .readdirSync(agentsDir, { withFileTypes: true })
       .filter((d) => d.isDirectory())
       .map((d) => d.name);
-    expect(dirs).toHaveLength(8);
+    expect(dirs).toHaveLength(9);
   });
 });
 
@@ -375,12 +376,12 @@ describe(".paperclip.yaml", () => {
     expect(content).toMatch(/schema:\s*paperclip\/v1/);
   });
 
-  it("declares heartbeat config for all 8 agents", () => {
+  it("declares heartbeat config for all 9 agents", () => {
     for (const slug of AGENT_SLUGS) {
       expect(content).toMatch(new RegExp(`${slug}:`));
     }
     expect(content.match(/intervalSec:\s*300/g)?.length).toBe(8);
-    expect(content.match(/wakeOnDemand:\s*true/g)?.length).toBe(8);
+    expect(content.match(/wakeOnDemand:\s*true/g)?.length).toBe(9);
   });
 
   it("declares GH_TOKEN as required for devops-engineer", () => {
