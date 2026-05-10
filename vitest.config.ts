@@ -22,6 +22,7 @@ export default defineConfig({
       "tests/cybershield-ai",
       "tests/devlaunch-studio",
       "tests/apiconnect-services",
+      "tests/datavault-analytics",
     ],
   },
 });
