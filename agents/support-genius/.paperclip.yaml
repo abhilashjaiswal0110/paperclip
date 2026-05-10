@@ -131,6 +131,14 @@ agents:
           kind: secret
           requirement: optional
 
+  chatbot-trainer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: true
+
 routines:
   daily-support-standup:
     task: tasks/daily-support-standup/TASK.md
@@ -147,3 +155,8 @@ routines:
     schedule:
       timezone: UTC
       cron: "*/15 * * * *"
+  weekly-escalation-review:
+    task: tasks/weekly-escalation-review/TASK.md
+    schedule:
+      timezone: UTC
+      cron: "0 9 * * 1"
