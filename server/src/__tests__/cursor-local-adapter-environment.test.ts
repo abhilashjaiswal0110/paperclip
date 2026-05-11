@@ -6,7 +6,10 @@ import { runChildProcess } from "@paperclipai/adapter-utils/server-utils";
 import { testEnvironment } from "@paperclipai/adapter-cursor-local/server";
 
 async function writeFakeAgentCommand(binDir: string, argsCapturePath: string): Promise<string> {
-  const commandPath = path.join(binDir, "agent");
+  const baseName = "agent";
+  const commandPath = process.platform === "win32"
+    ? path.join(binDir, `${baseName}.cmd`)
+    : path.join(binDir, baseName);
   const script = `#!/usr/bin/env node
 const fs = require("node:fs");
 const outPath = process.env.PAPERCLIP_TEST_ARGS_PATH;
@@ -23,8 +26,14 @@ console.log(JSON.stringify({
   result: "hello",
 }));
 `;
-  await fs.writeFile(commandPath, script, "utf8");
-  await fs.chmod(commandPath, 0o755);
+  if (process.platform === "win32") {
+    const jsPath = path.join(binDir, `${baseName}.js`);
+    await fs.writeFile(jsPath, script, "utf8");
+    await fs.writeFile(commandPath, `@node "${jsPath}" %*\r\n`, "utf8");
+  } else {
+    await fs.writeFile(commandPath, script, "utf8");
+    await fs.chmod(commandPath, 0o755);
+  }
   return commandPath;
 }
 
@@ -50,8 +59,14 @@ console.log(JSON.stringify({
 }));
 `;
   await fs.mkdir(path.dirname(commandPath), { recursive: true });
-  await fs.writeFile(commandPath, script, "utf8");
-  await fs.chmod(commandPath, 0o755);
+  if (process.platform === "win32") {
+    const jsPath = commandPath.replace(/\.cmd$/, "") + ".js";
+    await fs.writeFile(jsPath, script, "utf8");
+    await fs.writeFile(commandPath, `@node "${jsPath}" %*\r\n`, "utf8");
+  } else {
+    await fs.writeFile(commandPath, script, "utf8");
+    await fs.chmod(commandPath, 0o755);
+  }
 }
 
 function createLocalSandboxRunner() {
@@ -180,7 +195,7 @@ describe("cursor environment diagnostics", () => {
     await fs.rm(root, { recursive: true, force: true });
   });
 
-  it("prefers ~/.local/bin/cursor-agent for remote sandbox probes when using the default command", async () => {
+  it.skipIf(process.platform === "win32")("prefers ~/.local/bin/cursor-agent for remote sandbox probes when using the default command", async () => {
     const root = path.join(
       os.tmpdir(),
       `paperclip-cursor-sandbox-probe-${Date.now()}-${Math.random().toString(16).slice(2)}`,

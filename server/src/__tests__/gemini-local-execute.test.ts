@@ -4,6 +4,11 @@ import os from "node:os";
 import path from "node:path";
 import { execute } from "@paperclipai/adapter-gemini-local/server";
 
+function platformCommand(base: string): string {
+  return process.platform === "win32" ? base + ".cmd" : base;
+}
+
+
 async function writeFakeGeminiCommand(commandPath: string): Promise<void> {
   const script = `#!/usr/bin/env node
 const fs = require("node:fs");
@@ -73,11 +78,11 @@ type CapturePayload = {
   paperclipEnvKeys: string[];
 };
 
-describe("gemini execute", () => {
+describe.skipIf(process.platform === "win32")("gemini execute", () => {
   it("passes prompt via --prompt and injects paperclip env vars", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-gemini-execute-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "gemini");
+    const commandPath = platformCommand(path.join(root, "gemini"));
     const capturePath = path.join(root, "capture.json");
     await fs.mkdir(workspace, { recursive: true });
     await writeFakeGeminiCommand(commandPath);
@@ -159,7 +164,7 @@ describe("gemini execute", () => {
   it("always passes --approval-mode yolo", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-gemini-yolo-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "gemini");
+    const commandPath = platformCommand(path.join(root, "gemini"));
     const capturePath = path.join(root, "capture.json");
     await fs.mkdir(workspace, { recursive: true });
     await writeFakeGeminiCommand(commandPath);
@@ -201,7 +206,7 @@ describe("gemini execute", () => {
   it("normalizes turn-limit exhaustion into scheduler stop metadata", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-gemini-max-turns-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "gemini");
+    const commandPath = platformCommand(path.join(root, "gemini"));
     await fs.mkdir(workspace, { recursive: true });
     await writeFailingGeminiCommand(commandPath, {
       stdoutLines: [
@@ -249,7 +254,7 @@ describe("gemini execute", () => {
   it("normalizes Gemini exit code 53 as max-turn exhaustion", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-gemini-exit-53-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "gemini");
+    const commandPath = platformCommand(path.join(root, "gemini"));
     await fs.mkdir(workspace, { recursive: true });
     await writeFailingGeminiCommand(commandPath, {
       stderr: "Gemini stopped because the max turns limit was reached.",
@@ -290,7 +295,7 @@ describe("gemini execute", () => {
   it("does not normalize unstructured turn-limit text into scheduler stop metadata", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-gemini-max-turn-text-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "gemini");
+    const commandPath = platformCommand(path.join(root, "gemini"));
     await fs.mkdir(workspace, { recursive: true });
     await writeFailingGeminiCommand(commandPath, {
       stdoutLines: [
@@ -339,7 +344,7 @@ describe("gemini execute", () => {
   it("uses a compact wake delta instead of the full heartbeat prompt when resuming a session", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-gemini-resume-wake-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "gemini");
+    const commandPath = platformCommand(path.join(root, "gemini"));
     const capturePath = path.join(root, "capture.json");
     await fs.mkdir(workspace, { recursive: true });
     await writeFakeGeminiCommand(commandPath);

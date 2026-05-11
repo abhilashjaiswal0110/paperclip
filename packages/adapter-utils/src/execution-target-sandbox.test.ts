@@ -290,7 +290,7 @@ describe("sandbox adapter execution targets", () => {
     }));
   });
 
-  it("starts a localhost Paperclip bridge for sandbox targets in bridge mode", async () => {
+  it.skipIf(process.platform === "win32")("starts a localhost Paperclip bridge for sandbox targets in bridge mode", async () => {
     const rootDir = await mkdtemp(path.join(os.tmpdir(), "paperclip-execution-target-bridge-"));
     cleanupDirs.push(rootDir);
     const remoteCwd = path.join(rootDir, "workspace");
@@ -363,7 +363,7 @@ describe("sandbox adapter execution targets", () => {
     }
   });
 
-  it("fails oversized host responses with a 502 before returning them to the sandbox client", async () => {
+  it.skipIf(process.platform === "win32")("fails oversized host responses with a 502 before returning them to the sandbox client", async () => {
     const rootDir = await mkdtemp(path.join(os.tmpdir(), "paperclip-execution-target-bridge-limit-"));
     cleanupDirs.push(rootDir);
     const remoteCwd = path.join(rootDir, "workspace");

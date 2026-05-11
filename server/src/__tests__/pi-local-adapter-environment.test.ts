@@ -5,7 +5,7 @@ import path from "node:path";
 import { testEnvironment } from "@paperclipai/adapter-pi-local/server";
 
 async function writeFakePiCommand(binDir: string, mode: "success" | "stale-package"): Promise<void> {
-  const commandPath = path.join(binDir, "pi");
+  const scriptPath = path.join(binDir, "pi.js");
   const script =
     mode === "success"
       ? `#!/usr/bin/env node
@@ -34,8 +34,19 @@ if (process.argv.includes("--list-models")) {
 }
 process.exit(1);
 `;
-  await fs.writeFile(commandPath, script, "utf8");
-  await fs.chmod(commandPath, 0o755);
+  await fs.writeFile(scriptPath, script, "utf8");
+  await fs.chmod(scriptPath, 0o755);
+
+  if (process.platform === "win32") {
+    // On Windows, create a .cmd wrapper so the command is discoverable via PATHEXT
+    const cmdPath = path.join(binDir, "pi.cmd");
+    await fs.writeFile(cmdPath, `@node "%~dp0pi.js" %*\r\n`, "utf8");
+  } else {
+    // On Unix, create a shebang-based script named "pi"
+    const commandPath = path.join(binDir, "pi");
+    await fs.writeFile(commandPath, script, "utf8");
+    await fs.chmod(commandPath, 0o755);
+  }
 }
 
 describe("pi_local environment diagnostics", () => {

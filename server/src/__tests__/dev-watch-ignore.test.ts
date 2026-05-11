@@ -18,9 +18,9 @@ describe("resolveServerDevWatchIgnorePaths", () => {
     fs.mkdirSync(serverRoot, { recursive: true });
     fs.mkdirSync(worktreeUiRoot, { recursive: true });
 
-    fs.symlinkSync(path.join(sharedUiRoot, "node_modules"), path.join(worktreeUiRoot, "node_modules"));
-    fs.symlinkSync(path.join(sharedUiRoot, ".vite"), path.join(worktreeUiRoot, ".vite"));
-    fs.symlinkSync(path.join(sharedUiRoot, "dist"), path.join(worktreeUiRoot, "dist"));
+    fs.symlinkSync(path.join(sharedUiRoot, "node_modules"), path.join(worktreeUiRoot, "node_modules"), "junction");
+    fs.symlinkSync(path.join(sharedUiRoot, ".vite"), path.join(worktreeUiRoot, ".vite"), "junction");
+    fs.symlinkSync(path.join(sharedUiRoot, "dist"), path.join(worktreeUiRoot, "dist"), "junction");
 
     const ignorePaths = resolveServerDevWatchIgnorePaths(serverRoot);
 

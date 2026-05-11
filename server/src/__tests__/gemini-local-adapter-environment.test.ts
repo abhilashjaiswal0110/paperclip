@@ -5,7 +5,10 @@ import path from "node:path";
 import { testEnvironment } from "@paperclipai/adapter-gemini-local/server";
 
 async function writeFakeGeminiCommand(binDir: string, argsCapturePath: string): Promise<string> {
-  const commandPath = path.join(binDir, "gemini");
+  const baseName = "gemini";
+  const commandPath = process.platform === "win32"
+    ? path.join(binDir, `${baseName}.cmd`)
+    : path.join(binDir, baseName);
   const script = `#!/usr/bin/env node
 const fs = require("node:fs");
 const outPath = process.env.PAPERCLIP_TEST_ARGS_PATH;
@@ -22,22 +25,37 @@ console.log(JSON.stringify({
   result: "hello",
 }));
 `;
-  await fs.writeFile(commandPath, script, "utf8");
-  await fs.chmod(commandPath, 0o755);
+  if (process.platform === "win32") {
+    const jsPath = path.join(binDir, `${baseName}.js`);
+    await fs.writeFile(jsPath, script, "utf8");
+    await fs.writeFile(commandPath, `@node "${jsPath}" %*\r\n`, "utf8");
+  } else {
+    await fs.writeFile(commandPath, script, "utf8");
+    await fs.chmod(commandPath, 0o755);
+  }
   return commandPath;
 }
 
 async function writeQuotaGeminiCommand(binDir: string): Promise<string> {
-  const commandPath = path.join(binDir, "gemini");
+  const baseName = "gemini";
+  const commandPath = process.platform === "win32"
+    ? path.join(binDir, `${baseName}.cmd`)
+    : path.join(binDir, baseName);
   const script = `#!/usr/bin/env node
 if (process.argv.includes("--help")) {
   process.exit(0);
 }
-console.error("429 RESOURCE_EXHAUSTED: You exceeded your current quota and billing details.");
+process.stderr.write("429 RESOURCE_EXHAUSTED: You exceeded your current quota and billing details.\\n");
 process.exit(1);
 `;
-  await fs.writeFile(commandPath, script, "utf8");
-  await fs.chmod(commandPath, 0o755);
+  if (process.platform === "win32") {
+    const jsPath = path.join(binDir, `${baseName}.js`);
+    await fs.writeFile(jsPath, script, "utf8");
+    await fs.writeFile(commandPath, `@node "${jsPath}" %*\r\n`, "utf8");
+  } else {
+    await fs.writeFile(commandPath, script, "utf8");
+    await fs.chmod(commandPath, 0o755);
+  }
   return commandPath;
 }
 
