@@ -45,6 +45,9 @@ diagnostics/
 .paperclip-local/
 /.idea/
 /.agents/
+docs/plans/*
+*.log
+*.txt
 
 # Doc maintenance cursor
 .doc-review-cursor
