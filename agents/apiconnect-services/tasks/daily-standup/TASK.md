@@ -2,6 +2,7 @@
 name: Daily Standup
 assignee: program-manager
 recurring: true
+project: api-delivery-platform
 ---
 
 Run the daily delivery standup and update engagement tracking.

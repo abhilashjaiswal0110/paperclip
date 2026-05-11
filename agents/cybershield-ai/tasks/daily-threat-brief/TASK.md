@@ -2,6 +2,7 @@
 name: Daily Threat Intelligence Brief
 assignee: threat-analyst
 recurring: true
+project: threat-and-compliance-platform
 ---
 
 Compile and deliver the daily threat intelligence brief to ChiefGuard and ShieldCEO.

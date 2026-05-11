@@ -2,6 +2,7 @@
 name: Weekly Sprint Review
 assignee: product-manager
 recurring: true
+project: mvp-factory
 ---
 
 Conduct the weekly sprint review and prepare the client-facing delivery report.

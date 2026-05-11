@@ -2,6 +2,7 @@
 name: Weekly Retrospective
 assignee: program-manager
 recurring: true
+project: linkedin-mvp
 ---
 
 Run the weekly retrospective for AJ AI Services Pvt Ltd and deliver action items for the following week.

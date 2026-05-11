@@ -2,6 +2,7 @@
 name: Weekly Retrospective
 assignee: program-manager
 recurring: true
+project: cloud-operations-platform
 ---
 
 Run the weekly retrospective for CloudOps Pro and deliver action items for the following week.

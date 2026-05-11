@@ -2,6 +2,7 @@
 name: Weekly Retrospective
 assignee: product-manager
 recurring: true
+project: mvp-factory
 ---
 
 Run the weekly retrospective for DevLaunch Studio and deliver action items for the following week.

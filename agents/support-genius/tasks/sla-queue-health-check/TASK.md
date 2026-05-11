@@ -2,6 +2,7 @@
 name: SLA Queue Health Check
 assignee: sla-monitor
 recurring: true
+project: it-helpdesk-launch
 ---
 
 Run the automated SLA queue health check across all open tickets. This check fires every 15 minutes and is the primary mechanism for detecting SLA breach risk before it becomes an actual breach.

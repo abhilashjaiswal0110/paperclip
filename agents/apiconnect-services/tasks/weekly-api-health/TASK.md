@@ -2,6 +2,7 @@
 name: Weekly API Health Check
 assignee: devops-engineer
 recurring: true
+project: api-delivery-platform
 ---
 
 Run the weekly API health check across all APIs in production and report SLA status to DeliveryPilot.

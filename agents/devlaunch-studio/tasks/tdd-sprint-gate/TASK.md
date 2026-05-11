@@ -2,6 +2,7 @@
 name: TDD Sprint Gate — Test-Before-Code Verification
 assignee: qa-engineer
 recurring: true
+project: mvp-factory
 ---
 
 Verify that the current sprint follows test-driven development discipline before any feature implementation begins. This gate runs at sprint kickoff.

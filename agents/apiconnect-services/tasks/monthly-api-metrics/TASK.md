@@ -2,6 +2,7 @@
 name: Monthly API Metrics Report
 assignee: program-manager
 recurring: true
+project: api-delivery-platform
 ---
 
 Produce the monthly API portfolio metrics report for ConnectCEO and the board.

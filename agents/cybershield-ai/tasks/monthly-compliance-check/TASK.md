@@ -2,6 +2,7 @@
 name: Monthly Compliance Posture Check
 assignee: compliance-officer
 recurring: true
+project: threat-and-compliance-platform
 ---
 
 Run the monthly compliance posture check across ISO 27001, SOC 2 Type II, and GDPR. Update the evidence register and deliver the compliance dashboard to ShieldCEO.

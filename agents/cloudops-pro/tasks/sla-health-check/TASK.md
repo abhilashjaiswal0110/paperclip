@@ -2,6 +2,7 @@
 name: SLA Health Check
 assignee: sre
 recurring: true
+project: cloud-operations-platform
 ---
 
 Run the automated SLA health check across all managed client environments. This check fires every 15 minutes and is the primary mechanism for detecting SLA breach risk before it becomes an actual breach.

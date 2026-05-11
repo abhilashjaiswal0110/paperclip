@@ -2,6 +2,7 @@
 name: Weekly Retrospective
 assignee: program-manager
 recurring: true
+project: api-delivery-platform
 ---
 
 Run the weekly retrospective for APIConnect Services and deliver action items for the following week.

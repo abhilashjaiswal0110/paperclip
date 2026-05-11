@@ -2,6 +2,7 @@
 name: Weekly CSAT Report
 assignee: csat-analyst
 recurring: true
+project: it-helpdesk-launch
 ---
 
 Produce and distribute the weekly CSAT trend report every Monday at 08:00 UTC. This report provides SupportCEO and the board with full visibility into customer satisfaction trends, low-CSAT root causes, and actionable improvement recommendations.

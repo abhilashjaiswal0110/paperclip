@@ -284,11 +284,13 @@ Paperclip is a full control plane, not a wrapper. Before you build any of this y
 
 Open source. Self-hosted. No Paperclip account required.
 
+### Option 1 — npx (fastest)
+
 ```bash
 npx paperclipai onboard --yes
 ```
 
-That quickstart path now defaults to trusted local loopback mode for the fastest first run. To start in authenticated/private mode instead, choose a bind preset explicitly:
+Defaults to trusted local loopback mode. For authenticated/private mode choose a bind preset:
 
 ```bash
 npx paperclipai onboard --yes --bind lan
@@ -298,7 +300,49 @@ npx paperclipai onboard --yes --bind tailnet
 
 If you already have Paperclip configured, rerunning `onboard` keeps the existing config in place. Use `paperclipai configure` to edit settings.
 
-Or manually:
+### Option 2 — Docker (no Node required)
+
+Single container with embedded PostgreSQL — the simplest way to run Paperclip without installing Node or pnpm.
+
+```bash
+git clone https://github.com/paperclipai/paperclip.git
+cd paperclip
+
+# Generate a random secret and start
+BETTER_AUTH_SECRET=$(openssl rand -hex 32) \
+  docker compose -f docker/docker-compose.quickstart.yml up --build
+```
+
+Open: **http://localhost:3100**
+
+All data (database, uploads, secrets) persists in `./data/docker-paperclip` by default.
+
+Optional overrides:
+
+```bash
+PAPERCLIP_PORT=3200 \
+PAPERCLIP_DATA_DIR=../data/my-paperclip \
+BETTER_AUTH_SECRET=$(openssl rand -hex 32) \
+  docker compose -f docker/docker-compose.quickstart.yml up --build
+```
+
+> **Note (Windows):** Replace `$(openssl rand -hex 32)` with a manually generated 32-char secret, e.g.:
+> ```powershell
+> $secret = [Convert]::ToHexString([Security.Cryptography.RandomNumberGenerator]::GetBytes(32)).ToLower()
+> $env:BETTER_AUTH_SECRET = $secret
+> docker compose -f docker/docker-compose.quickstart.yml up --build
+> ```
+
+For a full stack with an external PostgreSQL 17 container:
+
+```bash
+BETTER_AUTH_SECRET=$(openssl rand -hex 32) \
+  docker compose -f docker/docker-compose.yml up --build
+```
+
+See [doc/DOCKER.md](doc/DOCKER.md) for the full Docker guide including authenticated mode, untrusted PR review, and build arguments.
+
+### Option 3 — Local dev (from source)
 
 ```bash
 git clone https://github.com/paperclipai/paperclip.git
@@ -310,6 +354,8 @@ pnpm dev
 This starts the API server at `http://localhost:3100`. An embedded PostgreSQL database is created automatically — no setup required.
 
 > **Requirements:** Node.js 20+, pnpm 9.15+
+>
+> **Troubleshooting:** If a `DATABASE_URL` pointing to an unavailable host exists in `~/.paperclip/instances/default/.env`, comment it out so the embedded PostgreSQL is used instead. The dev server will apply all pending migrations automatically on first run.
 
 <br/>
 

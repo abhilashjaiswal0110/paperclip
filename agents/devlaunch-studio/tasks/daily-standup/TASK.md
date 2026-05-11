@@ -2,6 +2,7 @@
 name: Daily Standup
 assignee: product-manager
 recurring: true
+project: mvp-factory
 ---
 
 Run the daily team standup and update the sprint tracking board.

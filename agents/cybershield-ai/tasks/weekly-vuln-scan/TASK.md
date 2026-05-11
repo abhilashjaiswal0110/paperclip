@@ -2,6 +2,7 @@
 name: Weekly Vulnerability Scan
 assignee: vulnerability-scanner
 recurring: true
+project: threat-and-compliance-platform
 ---
 
 Run the weekly authenticated vulnerability scan across all in-scope assets and produce the patch status report.

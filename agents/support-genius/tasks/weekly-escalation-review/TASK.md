@@ -2,6 +2,7 @@
 name: Weekly L2/L3 Escalation Review
 assignee: support-director
 recurring: true
+project: it-helpdesk-launch
 ---
 
 Review all L1-to-L2 and L2-to-L3 escalations from the prior week to identify patterns, close the training loop, and improve deflection rates.
