@@ -189,7 +189,6 @@ export async function testEnvironment(
       });
     } else {
       const model = asString(config.model, "").trim();
-      const effort = asString(config.effort, "").trim();
       const chrome = asBoolean(config.chrome, false);
       const maxTurns = asNumber(config.maxTurnsPerRun, 0);
       const dangerouslySkipPermissions = asBoolean(config.dangerouslySkipPermissions, true);
@@ -206,7 +205,6 @@ export async function testEnvironment(
       if (model && (!hasBedrock || isBedrockModelId(model))) {
         args.push("--model", model);
       }
-      if (effort) args.push("--effort", effort);
       if (maxTurns > 0) args.push("--max-turns", String(maxTurns));
       if (extraArgs.length > 0) args.push(...extraArgs);
 
