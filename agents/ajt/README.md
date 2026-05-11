@@ -48,6 +48,8 @@ agents/ajt/
 │   ├── frontend-engineer/AGENTS.md
 │   ├── devops-engineer/AGENTS.md
 │   └── growth-hacker/AGENTS.md
+├── skills/
+│   └── paperclip/SKILL.md
 ├── teams/
 │   ├── executive/TEAM.md
 │   ├── engineering/TEAM.md

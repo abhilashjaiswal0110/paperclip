@@ -326,7 +326,7 @@ BETTER_AUTH_SECRET=$(openssl rand -hex 32) \
   docker compose -f docker/docker-compose.quickstart.yml up --build
 ```
 
-> **Note (Windows):** Replace `$(openssl rand -hex 32)` with a manually generated 32-char secret, e.g.:
+> **Note (Windows):** Replace `$(openssl rand -hex 32)` with a manually generated 64-character hex secret, e.g.:
 > ```powershell
 > $secret = [Convert]::ToHexString([Security.Cryptography.RandomNumberGenerator]::GetBytes(32)).ToLower()
 > $env:BETTER_AUTH_SECRET = $secret

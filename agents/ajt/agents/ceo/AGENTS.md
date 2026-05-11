@@ -1,5 +1,5 @@
 ---
-name: CEO
+name: VisionArc
 title: Chief Executive Officer
 reportsTo: null
 skills:
