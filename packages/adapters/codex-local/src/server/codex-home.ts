@@ -43,6 +43,12 @@ async function ensureParentDir(target: string): Promise<void> {
 }
 
 async function ensureSymlink(target: string, source: string): Promise<void> {
+  // On Windows, file symlinks require Administrator or Developer Mode.
+  // Fall back to copying the file so the managed home stays functional.
+  if (process.platform === "win32") {
+    return ensureCopiedFile(target, source);
+  }
+
   const existing = await fs.lstat(target).catch(() => null);
   if (!existing) {
     await ensureParentDir(target);
