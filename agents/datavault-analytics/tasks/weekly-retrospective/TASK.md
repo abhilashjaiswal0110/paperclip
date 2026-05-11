@@ -2,6 +2,7 @@
 name: Weekly Retrospective
 assignee: data-steward
 recurring: true
+project: data-platform-foundation
 ---
 
 Run the weekly retrospective for DataVault Analytics and deliver action items for the following week.

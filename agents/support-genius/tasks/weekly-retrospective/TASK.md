@@ -2,6 +2,7 @@
 name: Weekly Retrospective
 assignee: support-director
 recurring: true
+project: it-helpdesk-launch
 ---
 
 Run the weekly retrospective for SupportGenius AI and deliver action items for the following week.

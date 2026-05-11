@@ -129,6 +129,13 @@ function formatEmbeddedPostgresError(error: unknown): string {
 }
 
 async function probeEmbeddedPostgresSupport(): Promise<EmbeddedPostgresTestSupport> {
+  if (process.platform === "win32") {
+    return {
+      supported: false,
+      reason: "Embedded Postgres tests are skipped on Windows (startup and migration time exceeds test timeouts).",
+    };
+  }
+
   const { dataDir, instance } = await createEmbeddedPostgresTestInstance(
     "paperclip-embedded-postgres-probe-",
   );

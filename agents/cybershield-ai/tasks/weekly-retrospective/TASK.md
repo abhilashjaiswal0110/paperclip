@@ -2,6 +2,7 @@
 name: Weekly Retrospective
 assignee: risk-orchestrator
 recurring: true
+project: threat-and-compliance-platform
 ---
 
 Run the weekly retrospective for CyberShield AI and deliver action items for the following week.

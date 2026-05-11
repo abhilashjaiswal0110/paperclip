@@ -2,6 +2,7 @@
 name: Weekly Data Quality Report
 assignee: data-steward
 recurring: true
+project: data-platform-foundation
 ---
 
 Deliver the weekly data quality scorecard covering all production pipelines.

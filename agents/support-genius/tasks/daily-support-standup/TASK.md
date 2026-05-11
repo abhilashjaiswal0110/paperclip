@@ -2,6 +2,7 @@
 name: Daily Support Standup
 assignee: support-director
 recurring: true
+project: it-helpdesk-launch
 ---
 
 Run the daily support team standup. This check fires every day at 09:00 UTC and is the primary mechanism for surfacing blockers, reviewing queue health, and ensuring all tiers are aligned on priorities and SLA status.

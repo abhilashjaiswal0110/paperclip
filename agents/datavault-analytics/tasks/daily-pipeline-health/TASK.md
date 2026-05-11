@@ -2,6 +2,7 @@
 name: Daily Pipeline Health Check
 assignee: dataops-engineer
 recurring: true
+project: data-platform-foundation
 ---
 
 Run the daily pipeline health check for all active data pipelines.

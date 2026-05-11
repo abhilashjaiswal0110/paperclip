@@ -2,6 +2,7 @@
 name: Daily Ops Standup
 assignee: program-manager
 recurring: true
+project: cloud-operations-platform
 ---
 
 Run the daily operations standup for CloudOps Pro. This is the synchronisation point for all eight agents — surface blockers, review active incidents, check SLA health, and ensure every team knows what everyone else is doing.

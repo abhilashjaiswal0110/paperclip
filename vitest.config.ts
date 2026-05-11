@@ -24,6 +24,7 @@ export default defineConfig({
       "tests/devlaunch-studio",
       "tests/apiconnect-services",
       "tests/datavault-analytics",
+      "tests/ajt",
     ],
   },
 });

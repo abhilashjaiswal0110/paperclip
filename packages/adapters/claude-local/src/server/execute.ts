@@ -355,7 +355,6 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
     DEFAULT_PAPERCLIP_AGENT_PROMPT_TEMPLATE,
   );
   const model = asString(config.model, "");
-  const effort = asString(config.effort, "");
   const chrome = asBoolean(config.chrome, false);
   const maxTurns = asNumber(config.maxTurnsPerRun, 0);
   const dangerouslySkipPermissions = asBoolean(config.dangerouslySkipPermissions, true);
@@ -662,7 +661,7 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
     if (model && (!isBedrockAuth(effectiveEnv) || isBedrockModelId(model))) {
       args.push("--model", model);
     }
-    if (effort) args.push("--effort", effort);
+
     if (maxTurns > 0) args.push("--max-turns", String(maxTurns));
     // On resumed sessions the instructions are already in the session cache;
     // re-injecting them via --append-system-prompt-file wastes 5-10K tokens

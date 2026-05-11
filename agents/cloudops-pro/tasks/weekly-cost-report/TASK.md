@@ -2,6 +2,7 @@
 name: Weekly Cloud Cost Report
 assignee: finops-analyst
 recurring: true
+project: cloud-operations-platform
 ---
 
 Generate and distribute the weekly cloud cost report for all managed client environments. This report is the primary mechanism for demonstrating progress toward the 30% cost reduction target.

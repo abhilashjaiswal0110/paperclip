@@ -2,6 +2,7 @@
 name: Sprint Retrospective
 assignee: product-manager
 recurring: true
+project: mvp-factory
 ---
 
 Run the sprint retrospective and capture process improvement actions for the next sprint.
