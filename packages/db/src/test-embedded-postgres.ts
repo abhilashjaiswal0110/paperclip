@@ -101,7 +101,24 @@ async function createEmbeddedPostgresTestInstance(tempDirPrefix: string) {
 }
 
 function cleanupEmbeddedPostgresTestDirs(dataDir: string) {
-  fs.rmSync(dataDir, { recursive: true, force: true });
+  // On Windows, embedded postgres files may still be locked briefly after stop.
+  // Retry a few times before giving up.
+  for (let attempt = 0; attempt < 10; attempt++) {
+    try {
+      fs.rmSync(dataDir, { recursive: true, force: true, maxRetries: 3, retryDelay: 500 });
+      return;
+    } catch (err: unknown) {
+      const isLocked = err instanceof Error && ("code" in err) && ((err as NodeJS.ErrnoException).code === "EBUSY" || (err as NodeJS.ErrnoException).code === "EPERM");
+      if (!isLocked || attempt === 9) {
+        // Best-effort: swallow cleanup errors so test results are not masked
+        if (process.platform === "win32") return;
+        throw err;
+      }
+      // Synchronous delay: spin-wait 500ms
+      const deadline = Date.now() + 500;
+      while (Date.now() < deadline) { /* spin */ }
+    }
+  }
 }
 
 function formatEmbeddedPostgresError(error: unknown): string {
