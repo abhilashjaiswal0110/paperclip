@@ -114,7 +114,7 @@ describe("sandbox callback bridge", () => {
     }
   });
 
-  it("round-trips localhost bridge requests over the sandbox queue without forwarding the bridge token", async () => {
+  it.skipIf(process.platform === "win32")("round-trips localhost bridge requests over the sandbox queue without forwarding the bridge token", async () => {
     const rootDir = await mkdtemp(path.join(os.tmpdir(), "paperclip-bridge-runtime-"));
     cleanupDirs.push(rootDir);
 
@@ -469,7 +469,7 @@ describe("sandbox callback bridge", () => {
     }
   });
 
-  it("serializes remote response writes so stop does not recreate a late orphaned response", async () => {
+  it.skipIf(process.platform === "win32")("serializes remote response writes so stop does not recreate a late orphaned response", async () => {
     const rootDir = await mkdtemp(path.join(os.tmpdir(), "paperclip-bridge-response-lock-"));
     cleanupDirs.push(rootDir);
 
@@ -561,7 +561,7 @@ describe("sandbox callback bridge", () => {
     ).resolves.toEqual([]);
   });
 
-  it("rejects non-JSON request bodies and full queues at the bridge server", async () => {
+  it.skipIf(process.platform === "win32")("rejects non-JSON request bodies and full queues at the bridge server", async () => {
     const rootDir = await mkdtemp(path.join(os.tmpdir(), "paperclip-bridge-server-guards-"));
     cleanupDirs.push(rootDir);
 
@@ -643,7 +643,7 @@ describe("sandbox callback bridge", () => {
     });
   });
 
-  it("returns a 502 when the host response times out", async () => {
+  it.skipIf(process.platform === "win32")("returns a 502 when the host response times out", async () => {
     const rootDir = await mkdtemp(path.join(os.tmpdir(), "paperclip-bridge-timeout-"));
     cleanupDirs.push(rootDir);
 
@@ -695,7 +695,7 @@ describe("sandbox callback bridge", () => {
     });
   });
 
-  it("returns a 502 for malformed host response files", async () => {
+  it.skipIf(process.platform === "win32")("returns a 502 for malformed host response files", async () => {
     const rootDir = await mkdtemp(path.join(os.tmpdir(), "paperclip-bridge-malformed-response-"));
     cleanupDirs.push(rootDir);
 
@@ -756,7 +756,7 @@ describe("sandbox callback bridge", () => {
     });
   });
 
-  it("reuses an already-uploaded bridge entrypoint when the remote file hash matches", async () => {
+  it.skipIf(process.platform === "win32")("reuses an already-uploaded bridge entrypoint when the remote file hash matches", async () => {
     const rootDir = await mkdtemp(path.join(os.tmpdir(), "paperclip-bridge-sync-"));
     cleanupDirs.push(rootDir);
 
@@ -808,7 +808,7 @@ describe("sandbox callback bridge", () => {
     ).resolves.toEqual([]);
   });
 
-  it("rejects a corrupted bridge entrypoint upload without committing a torn remote file", async () => {
+  it.skipIf(process.platform === "win32")("rejects a corrupted bridge entrypoint upload without committing a torn remote file", async () => {
     const rootDir = await mkdtemp(path.join(os.tmpdir(), "paperclip-bridge-sync-corrupt-"));
     cleanupDirs.push(rootDir);
 

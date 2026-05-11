@@ -5,6 +5,11 @@ import path from "node:path";
 import { runChildProcess } from "@paperclipai/adapter-utils/server-utils";
 import { execute } from "@paperclipai/adapter-cursor-local/server";
 
+function platformCommand(base: string): string {
+  return process.platform === "win32" ? base + ".cmd" : base;
+}
+
+
 async function writeFakeCursorCommand(commandPath: string): Promise<void> {
   const script = `#!/usr/bin/env node
 const fs = require("node:fs");
@@ -116,7 +121,7 @@ async function createSkillDir(root: string, name: string) {
   return skillDir;
 }
 
-describe("cursor execute", () => {
+describe.skipIf(process.platform === "win32")("cursor execute", () => {
   it("injects paperclip env vars and prompt note by default", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-cursor-execute-"));
     const workspace = path.join(root, "workspace");

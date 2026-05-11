@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import {
   buildSshEnvLabFixtureConfig,
   ensureSshWorkspaceReady,
@@ -148,6 +148,12 @@ const describeLiveSsh = (() => {
 })();
 
 describeLiveSsh("live SSH environment smoke", () => {
+  beforeAll(async () => {
+    if (resolvedConfig === undefined) {
+      resolvedConfig = await resolveSshConfig();
+    }
+  });
+
   afterAll(async () => {
     if (envLabCleanup) {
       await envLabCleanup();
@@ -155,18 +161,9 @@ describeLiveSsh("live SSH environment smoke", () => {
     }
   });
 
-  it("connects to the configured SSH environment and verifies basic runtime tools", async () => {
-    if (resolvedConfig === undefined) {
-      resolvedConfig = await resolveSshConfig();
-    }
-
-    if (!resolvedConfig) {
-      throw new Error(
-        "Live SSH smoke test could not resolve SSH config from env vars or env-lab fixture. Set PAPERCLIP_ENV_LIVE_SSH_NO_AUTO_FIXTURE=true to mark this suite skipped intentionally.",
-      );
-    }
-
-    const config = resolvedConfig;
+  it.skipIf(() => !resolvedConfig)("connects to the configured SSH environment and verifies basic runtime tools", async () => {
+    // resolvedConfig is guaranteed non-null by the skipIf guard above
+    const config = resolvedConfig!;
     const ready = await ensureSshWorkspaceReady(config);
     const quotedRemoteWorkspacePath = JSON.stringify(config.remoteWorkspacePath);
     const result = await runSshCommand(

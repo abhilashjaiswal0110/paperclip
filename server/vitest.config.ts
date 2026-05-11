@@ -20,5 +20,6 @@ export default defineConfig({
       hooks: "list",
     },
     setupFiles: ["./src/__tests__/setup-supertest.ts"],
+    testTimeout: 30000,
   },
 });

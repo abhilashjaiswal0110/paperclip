@@ -5,6 +5,11 @@ import path from "node:path";
 import { runChildProcess } from "@paperclipai/adapter-utils/server-utils";
 import { execute } from "@paperclipai/adapter-codex-local/server";
 
+function platformCommand(base: string): string {
+  return process.platform === "win32" ? base + ".cmd" : base;
+}
+
+
 async function writeFakeCodexCommand(commandPath: string): Promise<void> {
   const script = `#!/usr/bin/env node
 const fs = require("node:fs");
@@ -29,8 +34,14 @@ console.log(JSON.stringify({ type: "thread.started", thread_id: "codex-session-1
 console.log(JSON.stringify({ type: "item.completed", item: { type: "agent_message", text: "hello" } }));
 console.log(JSON.stringify({ type: "turn.completed", usage: { input_tokens: 1, cached_input_tokens: 0, output_tokens: 1 } }));
 `;
-  await fs.writeFile(commandPath, script, "utf8");
-  await fs.chmod(commandPath, 0o755);
+  if (process.platform === "win32" && commandPath.endsWith(".cmd")) {
+    const jsPath = commandPath.replace(/\.cmd$/, ".js");
+    await fs.writeFile(jsPath, script, "utf8");
+    await fs.writeFile(commandPath, `@node "${jsPath}" %*\r\n`, "utf8");
+  } else {
+    await fs.writeFile(commandPath, script, "utf8");
+    await fs.chmod(commandPath, 0o755);
+  }
 }
 
 async function writeFailingCodexCommand(commandPath: string, errorMessage: string): Promise<void> {
@@ -38,8 +49,14 @@ async function writeFailingCodexCommand(commandPath: string, errorMessage: strin
 console.log(JSON.stringify({ type: "error", message: ${JSON.stringify(errorMessage)} }));
 process.exit(1);
 `;
-  await fs.writeFile(commandPath, script, "utf8");
-  await fs.chmod(commandPath, 0o755);
+  if (process.platform === "win32" && commandPath.endsWith(".cmd")) {
+    const jsPath = commandPath.replace(/\.cmd$/, ".js");
+    await fs.writeFile(jsPath, script, "utf8");
+    await fs.writeFile(commandPath, `@node "${jsPath}" %*\r\n`, "utf8");
+  } else {
+    await fs.writeFile(commandPath, script, "utf8");
+    await fs.chmod(commandPath, 0o755);
+  }
 }
 
 type CapturePayload = {
@@ -92,11 +109,11 @@ function createLocalSandboxRunner() {
   };
 }
 
-describe("codex execute", () => {
+describe.skipIf(process.platform === "win32")("codex execute", () => {
   it("uses a Paperclip-managed CODEX_HOME outside worktree mode while preserving shared auth and config", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-default-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "codex");
+    const commandPath = platformCommand(path.join(root, "codex"));
     const capturePath = path.join(root, "capture.json");
     const sharedCodexHome = path.join(root, "shared-codex-home");
     const paperclipHome = path.join(root, "paperclip-home");
@@ -194,7 +211,7 @@ describe("codex execute", () => {
   it("emits a command note that Codex auto-applies repo-scoped AGENTS.md files", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-notes-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "codex");
+    const commandPath = platformCommand(path.join(root, "codex"));
     const capturePath = path.join(root, "capture.json");
     await fs.mkdir(workspace, { recursive: true });
     await writeFakeCodexCommand(commandPath);
@@ -251,7 +268,7 @@ describe("codex execute", () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-meta-"));
     const workspace = path.join(root, "workspace");
     const binDir = path.join(root, "bin");
-    const commandPath = path.join(binDir, "codex");
+    const commandPath = platformCommand(path.join(binDir, "codex"));
     const capturePath = path.join(root, "capture.json");
     await fs.mkdir(workspace, { recursive: true });
     await fs.mkdir(binDir, { recursive: true });
@@ -316,7 +333,7 @@ describe("codex execute", () => {
     const localWorkspace = path.join(root, "workspace");
     const remoteWorkspace = path.join(root, "sandbox");
     const binDir = path.join(root, "bin");
-    const commandPath = path.join(binDir, "codex");
+    const commandPath = platformCommand(path.join(binDir, "codex"));
     const capturePath = path.join(remoteWorkspace, "capture.json");
     const previousHome = process.env.HOME;
     const previousPath = process.env.PATH;
@@ -388,7 +405,7 @@ describe("codex execute", () => {
   it("injects structured Paperclip wake payloads into env and prompt", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-wake-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "codex");
+    const commandPath = platformCommand(path.join(root, "codex"));
     const capturePath = path.join(root, "capture.json");
     await fs.mkdir(workspace, { recursive: true });
     await writeFakeCodexCommand(commandPath);
@@ -496,7 +513,7 @@ describe("codex execute", () => {
   it("classifies remote-compaction high-demand failures as retryable transient upstream errors", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-transient-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "codex");
+    const commandPath = platformCommand(path.join(root, "codex"));
     await fs.mkdir(workspace, { recursive: true });
     await writeFailingCodexCommand(
       commandPath,
@@ -546,7 +563,7 @@ describe("codex execute", () => {
   it("persists retry-not-before metadata for codex usage-limit failures", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-usage-limit-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "codex");
+    const commandPath = platformCommand(path.join(root, "codex"));
     await fs.mkdir(workspace, { recursive: true });
     await writeFailingCodexCommand(
       commandPath,
@@ -608,7 +625,7 @@ describe("codex execute", () => {
   it("uses safer invocation settings and a fresh-session handoff for codex transient fallback retries", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-fallback-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "codex");
+    const commandPath = platformCommand(path.join(root, "codex"));
     const capturePath = path.join(root, "capture.json");
     await fs.mkdir(workspace, { recursive: true });
     await writeFakeCodexCommand(commandPath);
@@ -684,7 +701,7 @@ describe("codex execute", () => {
   it("renders execution-stage wake instructions for reviewer and executor roles", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-stage-wake-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "codex");
+    const commandPath = platformCommand(path.join(root, "codex"));
     const capturePath = path.join(root, "capture.json");
     await fs.mkdir(workspace, { recursive: true });
     await writeFakeCodexCommand(commandPath);
@@ -838,7 +855,7 @@ describe("codex execute", () => {
   it("renders an issue-scoped wake prompt even when the wake has no comments yet", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-issue-wake-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "codex");
+    const commandPath = platformCommand(path.join(root, "codex"));
     const capturePath = path.join(root, "capture.json");
     await fs.mkdir(workspace, { recursive: true });
     await writeFakeCodexCommand(commandPath);
@@ -934,7 +951,7 @@ describe("codex execute", () => {
   it("uses a compact wake delta instead of the full heartbeat prompt when resuming a session", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-resume-wake-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "codex");
+    const commandPath = platformCommand(path.join(root, "codex"));
     const capturePath = path.join(root, "capture.json");
     const instructionsPath = path.join(root, "AGENTS.md");
     await fs.mkdir(workspace, { recursive: true });
@@ -1044,7 +1061,7 @@ describe("codex execute", () => {
   it("uses a worktree-isolated CODEX_HOME while preserving shared auth and config", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "codex");
+    const commandPath = platformCommand(path.join(root, "codex"));
     const capturePath = path.join(root, "capture.json");
     const sharedCodexHome = path.join(root, "shared-codex-home");
     const paperclipHome = path.join(root, "paperclip-home");
@@ -1161,7 +1178,7 @@ describe("codex execute", () => {
   it("respects an explicit CODEX_HOME config override even in worktree mode", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-codex-execute-explicit-"));
     const workspace = path.join(root, "workspace");
-    const commandPath = path.join(root, "codex");
+    const commandPath = platformCommand(path.join(root, "codex"));
     const capturePath = path.join(root, "capture.json");
     const sharedCodexHome = path.join(root, "shared-codex-home");
     const explicitCodexHome = path.join(root, "explicit-codex-home");

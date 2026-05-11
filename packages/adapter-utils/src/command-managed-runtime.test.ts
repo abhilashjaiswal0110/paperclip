@@ -21,7 +21,7 @@ describe("command managed runtime", () => {
     }
   });
 
-  it("keeps the runtime overlay out of sandbox workspace sync by default", async () => {
+  it.skipIf(process.platform === "win32")("keeps the runtime overlay out of sandbox workspace sync by default", async () => {
     const rootDir = await mkdtemp(path.join(os.tmpdir(), "paperclip-command-runtime-"));
     cleanupDirs.push(rootDir);
 
@@ -132,7 +132,7 @@ describe("command managed runtime", () => {
     expect(calls.every((call) => call.stdin == null)).toBe(true);
   });
 
-  it("runs setup commands from the existing sandbox cwd when staging into a nested remote workspace dir", async () => {
+  it.skipIf(process.platform === "win32")("runs setup commands from the existing sandbox cwd when staging into a nested remote workspace dir", async () => {
     const rootDir = await mkdtemp(path.join(os.tmpdir(), "paperclip-command-runtime-nested-"));
     cleanupDirs.push(rootDir);
 

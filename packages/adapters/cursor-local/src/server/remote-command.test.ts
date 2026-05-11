@@ -43,7 +43,7 @@ printf '%s\\n' ok
   await fs.chmod(commandPath, 0o755);
 }
 
-describe("prepareCursorSandboxCommand", () => {
+describe.skipIf(process.platform === "win32")("prepareCursorSandboxCommand", () => {
   it("keeps probing the original sandbox home after managed HOME overrides", async () => {
     const root = await fs.mkdtemp(path.join(os.tmpdir(), "paperclip-cursor-remote-command-"));
     const systemHomeDir = path.join(root, "system-home");
