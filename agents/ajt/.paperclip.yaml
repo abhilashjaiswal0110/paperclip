@@ -1,0 +1,136 @@
+schema: paperclip/v1
+
+agents:
+  ceo:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 300
+        wakeOnDemand: true
+    inputs:
+      env:
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+  cto:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: true
+    inputs:
+      env:
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+  cmo:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: true
+    inputs:
+      env:
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+        SLACK_WEBHOOK_URL:
+          kind: secret
+          requirement: optional
+  ux-designer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: true
+    inputs:
+      env:
+        FIGMA_API_KEY:
+          kind: secret
+          requirement: optional
+  backend-engineer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: true
+    inputs:
+      env:
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+        AWS_ACCESS_KEY_ID:
+          kind: secret
+          requirement: optional
+        AWS_SECRET_ACCESS_KEY:
+          kind: secret
+          requirement: optional
+  frontend-engineer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: true
+    inputs:
+      env:
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+        VERCEL_TOKEN:
+          kind: secret
+          requirement: optional
+  devops-engineer:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: true
+    inputs:
+      env:
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+        AWS_ACCESS_KEY_ID:
+          kind: secret
+          requirement: optional
+        AWS_SECRET_ACCESS_KEY:
+          kind: secret
+          requirement: optional
+        VERCEL_TOKEN:
+          kind: secret
+          requirement: optional
+  growth-hacker:
+    runtime:
+      heartbeat:
+        enabled: true
+        intervalSec: 0
+        wakeOnAssignment: true
+        wakeOnDemand: true
+    inputs:
+      env:
+        SLACK_WEBHOOK_URL:
+          kind: secret
+          requirement: optional
+
+routines:
+  daily-standup:
+    task: tasks/daily-standup/TASK.md
+    schedule:
+      timezone: Asia/Kolkata
+      cron: "0 9 * * 1-5"
+  weekly-retrospective:
+    task: tasks/weekly-retrospective/TASK.md
+    schedule:
+      timezone: Asia/Kolkata
+      cron: "0 10 * * 5"
+  budget-alert-review:
+    task: tasks/budget-alert-review/TASK.md
+    schedule:
+      timezone: Asia/Kolkata
+      cron: "0 9 * * 1"
