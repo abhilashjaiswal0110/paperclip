@@ -58,9 +58,17 @@ function parseEnvFile(contents: string): Record<string, string> {
     }
 
     if (
-      (value.startsWith("\"") && value.endsWith("\"")) ||
-      (value.startsWith("'") && value.endsWith("'"))
+      (value.startsWith("\"") && value.endsWith("\""))
     ) {
+      try {
+        entries[key] = JSON.parse(value) as string;
+      } catch {
+        entries[key] = value.slice(1, -1);
+      }
+      continue;
+    }
+
+    if (value.startsWith("'") && value.endsWith("'")) {
       entries[key] = value.slice(1, -1);
       continue;
     }
